@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS + CSS Clock</title>
-</head>
-<body>
-
-
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS + CSS Clock</title>
+  </head>
+  <body>
     <div class="clock">
       <div class="clock-face">
         <div class="hand hour-hand"></div>
@@ -15,60 +13,96 @@
       </div>
     </div>
 
+    <style>
+      html {
+        background: #018ded url(http://unsplash.it/1500/1000?image=881&blur=50);
+        background-size: cover;
+        font-family: "helvetica neue";
+        text-align: center;
+        font-size: 10px;
+      }
 
-  <style>
-    html {
-      background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
-      background-size: cover;
-      font-family: 'helvetica neue';
-      text-align: center;
-      font-size: 10px;
-    }
+      body {
+        margin: 0;
+        font-size: 2rem;
+        display: flex;
+        flex: 1;
+        min-height: 100vh;
+        align-items: center;
+      }
 
-    body {
-      margin: 0;
-      font-size: 2rem;
-      display: flex;
-      flex: 1;
-      min-height: 100vh;
-      align-items: center;
-    }
+      .clock {
+        width: 30rem;
+        height: 30rem;
+        border: 20px solid white;
+        border-radius: 50%;
+        margin: 50px auto;
+        position: relative;
+        padding: 2rem;
+        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1), inset 0 0 0 3px #efefef,
+          inset 0 0 10px black, 0 0 10px rgba(0, 0, 0, 0.2);
+      }
 
-    .clock {
-      width: 30rem;
-      height: 30rem;
-      border: 20px solid white;
-      border-radius: 50%;
-      margin: 50px auto;
-      position: relative;
-      padding: 2rem;
-      box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
-        inset 0 0 0 3px #EFEFEF,
-        inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
-    }
+      .clock-face {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform: translateY(
+          -3px
+        ); /* account for the height of the clock hands */
+        position: relative;
 
-    .clock-face {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
-    }
+      }
+      .clock-face::before{
+        position: absolute;
+        content: "";
+        width: 30px;
+        height: 30px;
+        background-color: rgb(196, 10, 10);
+        border-radius: 50%;
+        top: 46%;
+        left: 45%;
+        z-index: 50;
+      }
+      .hand {
+        width: 50%;
+        height: 6px;
+        background: black;
+        position: absolute;
+        top: 50%;
+        transform: rotate(0);
+        transform-origin: 100%;
+      }
+    </style>
 
-    .hand {
-      width: 50%;
-      height: 6px;
-      background: black;
-      position: absolute;
-      top: 50%;
-    }
+    <script>
+      // lets choose arrows
+      const hourArrow = document.querySelector(".hour-hand");
+      const minutesArrow = document.querySelector(".min-hand");
+      const secondArrow = document.querySelector(".second-hand");
 
-  </style>
+      setInterval(moveArrow,1000)
 
-  <script>
+      function moveArrow(){
+        // lets get present time
+        const timeNow = new Date();
+        let secondsNow = timeNow.getSeconds();
+        let minutesNow = timeNow.getMinutes();
+        let hoursNow = timeNow.getHours();
 
+        // define degrees
+        let secondPosition = ((secondsNow / 60) * 360) + 90;
+        let minutesPosition = ((minutesNow / 60) * 360) + ((secondsNow/60)*6) + 90;
+        let hourPosition = ((hoursNow / 12) * 360) + ((minutesNow/60)*30) + 90;
 
-  </script>
-</body>
+        // change css property 
+        secondArrow.style.transform =`rotate(${secondPosition}deg)`;
+        secondArrow.style.background = `#${Math.floor(Math.random()*1000000)}`;
+        minutesArrow.style.transform =`rotate(${minutesPosition}deg)`;
+        hourArrow.style.transform =`rotate(${hourPosition}deg)`; 
+      }
+// moveArrow()
+
+    </script>
+  </body>
 </html>
