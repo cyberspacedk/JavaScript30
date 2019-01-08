@@ -23,3 +23,5 @@
  ```javascript
  document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
 ```
+### [Day 4: Array Methods 1]()
+- Интересные задания № 7, 8
