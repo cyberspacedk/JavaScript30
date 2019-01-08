@@ -31,17 +31,35 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
-
+const whoBorn = inventors.filter(elem => {
+    return  elem.year >=1500 && elem.year <= 1600 ? true: false;
+})
+console.table(whoBorn);
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
-
+const inventorsName = inventors.map(elem => {
+  return `FistName: ${elem.first} LastName: ${elem.last}`;
+  });
+  console.table(inventorsName);
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
-
+const sortAges = inventors.sort((older, younger)=>{
+  return older.year > younger.year ? 1 : -1;
+})
+console.table(sortAges);
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
-
+const liveTime = inventors.reduce((acc, elem) =>{
+  return acc + (elem.passed - elem.year);
+ }, 0)
+console.log(liveTime);
     // 5. Sort the inventors by years lived
+const howManyHeLive = inventors.sort((lot, less)=>{
+  const personA = lot.passed-lot.year;
+  const personB = less.passed-less.year;
+  return personA > personB ? 1: -1;
+})
+console.table(howManyHeLive);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -49,11 +67,24 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
-
+const names  = people.sort((prev , next) =>{
+  const[lastNameA, firstNameA] = prev.split(", ");
+  const[lastNameB, firstNameB] = next.split(", ");
+  return lastNameA > lastNameB ? 1 : -1 ;
+})
+console.table(names);
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+    
+    const total = data.reduce(function(obj, item) {
+      if (!obj[item]) {
+        obj[item] = 0;
+      }
+      obj[item]++;
+      return obj;
+    }, {});
+    console.table(total);
   </script>
 </body>
 </html>
