@@ -23,5 +23,5 @@
  ```javascript
  document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
 ```
-### [Day 4: Array Methods 1]()
+### [Day 4: Array Methods 1](https://cyberspacedk.github.io/JavaScript30/04%20-%20Array%20Cardio%20Day%201/index-START.html)
 - Интересные задания № 7, 8
