@@ -26,6 +26,9 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
+      
+
     }
 
     .panel {
@@ -43,7 +46,12 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
-    }
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+         }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
     .panel2 { background-image:url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500); }
@@ -63,7 +71,11 @@
       font-family: 'Amatic SC', cursive;
       text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
       font-size: 2em;
-    }
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center';   
+       }
     
     .panel p:nth-child(2) {
       font-size: 4em;
@@ -72,7 +84,26 @@
     .panel.open {
       font-size: 40px;
     }
-
+    /* hide first  */
+    .panel p:nth-child(1){
+      transform: translateY(-100%);
+    }
+    /* show first */
+    .panel.show p:nth-child(1){
+      transform: translateY(0); 
+    }
+    /* hide second */
+    .panel p:nth-child(3){
+      transform: translateY(100%);
+    }
+    /* show second */
+    .panel.show p:nth-child(3){
+      transform: translateY(0); 
+    }
+/* grow */
+.panel.grow{
+  flex: 3;
+}
   </style>
 
 
@@ -105,6 +136,22 @@
   </div>
 
   <script>
+// lets shoose all panel
+const panel = document.querySelectorAll('.panel');
+console.log(panel);
+
+// show children
+function toggleClass(){
+   this.classList.toggle('show');
+}
+// make wide
+function makeWide(e){
+  panel.forEach(elem => elem.classList.remove('grow'));
+  e.currentTarget.classList.toggle('grow');
+  } 
+  
+panel.forEach(elem=> elem.addEventListener('click', makeWide));
+panel.forEach(elem=> elem.addEventListener('click', toggleClass));
 
   </script>
 
