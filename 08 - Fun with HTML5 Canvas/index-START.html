@@ -1,19 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>HTML5 Canvas</title>
-</head>
-<body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-</script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML5 Canvas</title>
+  </head>
+  <body>
+    <canvas id="draw" width="800" height="800"></canvas>
+    <script>
+      // отобрали елемент canvas
+      const canvas = document.querySelector("#draw");
+      // получили контекст
+      const ctx = canvas.getContext("2d");
+      // определили размер холста
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      //цвет, толщина и тип линии
+      ctx.strokeStyle = "#BADA55";
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.lineWidth = 100;
+     
+      // режим рисования, ФЛАГ 
+      let isDrawing = false;
+      // начальное положение 
+      let lastX = 0;
+      let lastY = 0;
+      let hue = 0;
+      let direction = true;
 
-<style>
-  html, body {
-    margin: 0;
-  }
-</style>
+      function draw(e) {
+        if (!isDrawing) return; // если ФЛАГ в положении false то выходим из функции  
 
-</body>
+        ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;  // игра с цветом, увеличиваем переменную hue
+
+        ctx.beginPath();
+        // start from
+        ctx.moveTo(lastX, lastY);
+        // go to
+        ctx.lineTo(e.offsetX, e.offsetY);
+
+        ctx.stroke();
+        [lastX, lastY] = [e.offsetX, e.offsetY]; // обновляем положение координаты мыши
+
+        hue++;
+
+        // hue нужна для изменения цвета линии, если значение доходит до 360 то обнуляем
+        if (hue >= 360) hue = 0;
+
+        // если толщина линии больше 100 и меньше 1 ФЛИПАЕМ ФЛАГ
+        if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1)  direction = !direction; 
+
+        // играем с толщиной . Если ФЛАГ direction = true , то увеличиваем толщину линии и наоборот
+        (direction)? ctx.lineWidth++ : ctx.lineWidth--; 
+      }
+
+      // если нажали кнопку мыши , ФЛИПАЕМ ФЛАГ РИСОВАНИЯ и ОБНОВЛЯЕМ КООРДИНАТЫ
+      canvas.addEventListener("mousedown", e => {
+        isDrawing = true; 
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+      });
+
+      canvas.addEventListener("mousemove", draw);
+      
+      // если кнопка ОТЖАТА или мышь УШЛА за пределы холста ФЛИПАЕМ ФЛАГ РИСОВАНИЯ
+      canvas.addEventListener("mouseup", () => (isDrawing = false));
+      canvas.addEventListener("mouseout", () => (isDrawing = false));
+    </script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+      }
+    </style>
+  </body>
 </html>
